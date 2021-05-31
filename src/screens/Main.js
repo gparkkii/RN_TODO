@@ -1,26 +1,21 @@
 import React, { useState } from 'react';
-import { AsyncStorage } from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import styled from 'styled-components';
 import TaskInput from 'components/TaskInput';
 import TaskContent from 'components/TaskContent';
-import taskData from 'utils/taskData';
 
-const Main = () => {
+const Main = ({ Tasks, setTasks }) => {
   const [Value, setValue] = useState('');
-  const { Tasks, setTasks } = taskData();
 
   const onTaskHandler = text => {
     setValue(text);
   };
 
-  const onLoadTask = async tasks => {
-    const loadedTasks = AsyncStorage.getItem('tasks');
-    setTasks(JSON.parse(loadedTasks || '{}'));
-  };
-
   const onSaveTask = async tasks => {
     try {
-      await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
+      await AsyncStorage.setItem('tasks', JSON.stringify(tasks), () => {
+        console.log('todo 저장완료 :', tasks);
+      });
       setTasks(tasks);
     } catch (e) {
       console.error(e);
