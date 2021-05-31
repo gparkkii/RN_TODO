@@ -1,12 +1,13 @@
 import React from 'react';
-import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components';
-import { BoldText } from 'styles/typo';
+import { BoldText, RegularText } from 'styles/typo';
+import getToday from 'utils/getDateUtil';
 
 const Header = () => {
   return (
     <StyledHeader>
-      <BoldText fontSize="large">TODAY</BoldText>
+      <BoldText fontSize="large">{getToday().Date}</BoldText>
+      <RegularText fontSize="small">{getToday().Week}</RegularText>
     </StyledHeader>
   );
 };
