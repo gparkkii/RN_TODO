@@ -51,6 +51,7 @@ module.exports = {
     'react/destructuring-assignment': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
     'react/display-name': 'warn',
+    'react/forbid-prop-types': 'warn',
   },
   globals: {
     fetch: false,

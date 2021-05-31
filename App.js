@@ -1,28 +1,39 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  useColorScheme,
-} from 'react-native';
-import styled, { ThemeProvider } from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import { Appearance, Platform, StatusBar, useColorScheme } from 'react-native';
+import styled, { ThemeContext, ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './src/styles/theme';
+import { defaultMode } from './src/context/ThemeContext';
 import Main from './src/screens/Main';
 import Header from './src/components/Header';
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [themeState, setThemeState] = useState(defaultMode);
+  const setMode = mode => {
+    setThemeState(mode);
+  };
+
+  useEffect(() => {
+    Appearance.addChangeListener(({ colorScheme }) => {
+      setThemeState(colorScheme);
+    });
+  }, []);
 
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <Container>
-        <StatusBar translucent />
-        <Scroll>
-          <Header />
-          <Main />
-        </Scroll>
-      </Container>
-    </ThemeProvider>
+    <ThemeContext.Provider value={{ mode: themeState, setMode }}>
+      <ThemeProvider theme={themeState === 'dark' ? darkTheme : lightTheme}>
+        <Container>
+          <StatusBar
+            barStyle={themeState === 'dark' ? 'light-content' : 'dark-content'}
+            translucent={true}
+            backgroundColor="transparent"
+          />
+          <Scroll>
+            <Header />
+            <Main />
+          </Scroll>
+        </Container>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   );
 };
 
@@ -31,7 +42,8 @@ export default App;
 const Container = styled.SafeAreaView`
   display: flex;
   flex: 1;
-  background-color: ${props => props.theme.background};
+  background-color: ${({ theme }) => theme.background};
+  padding-top: ${Platform.OS === 'android' ? '25px' : '0px'};
 `;
 
 const Scroll = styled.ScrollView`
