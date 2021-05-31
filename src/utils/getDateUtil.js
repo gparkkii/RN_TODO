@@ -1,3 +1,5 @@
+import { get } from 'react-native/Libraries/Utilities/PixelRatio';
+
 const MonthToString = {
   1: 'Jan',
   2: 'Feb',
@@ -23,11 +25,13 @@ const WeekToString = new Array(
   'Saturday',
 );
 
-export default function getToday() {
-  const newDate = new Date();
+const getToday = pickedDate => {
+  const newDate = pickedDate ? new Date(pickedDate) : new Date();
   const Month = MonthToString[newDate.getMonth() + 1];
 
   const Week = WeekToString[newDate.getDay()];
 
   return { Date: `${Month} ${newDate.getDate()}`, Week };
-}
+};
+
+export default getToday;

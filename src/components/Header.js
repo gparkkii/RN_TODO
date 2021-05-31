@@ -3,12 +3,16 @@ import styled from 'styled-components';
 import { BoldText, RegularText } from 'styles/typo';
 import getToday from 'utils/getDateUtil';
 
-const Header = () => {
+const Header = ({ onPress, today }) => {
   return (
-    <StyledHeader>
-      <BoldText fontSize="large">{getToday().Date}</BoldText>
-      <RegularText fontSize="small">{getToday().Week}</RegularText>
-    </StyledHeader>
+    <>
+      <StyledHeader>
+        <StyledButton onPress={onPress}>
+          <BoldText fontSize="large">{getToday(today).Date}</BoldText>
+          <RegularText fontSize="small">{getToday(today).Week}</RegularText>
+        </StyledButton>
+      </StyledHeader>
+    </>
   );
 };
 
@@ -21,6 +25,12 @@ const StyledHeader = styled.View`
   right: 0;
   left: 0;
   height: 60px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledButton = styled.Pressable`
+  display: flex;
   align-items: center;
   justify-content: center;
 `;
