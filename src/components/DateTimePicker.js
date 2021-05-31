@@ -3,7 +3,7 @@ import { Platform, Pressable, Text } from 'react-native';
 import styled from 'styled-components';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 
-const DateTimePickerTest = ({ onPress, onChange, date }) => {
+const DateTimePicker = ({ onPress, onChange, date }) => {
   return (
     <Container onPress={onPress}>
       <DateTimeView>
@@ -26,7 +26,7 @@ const DateTimePickerTest = ({ onPress, onChange, date }) => {
   );
 };
 
-export default DateTimePickerTest;
+export default DateTimePicker;
 
 const DateTimeView = styled.View`
   position: absolute;

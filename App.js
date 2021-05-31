@@ -6,7 +6,7 @@ import { darkTheme, lightTheme } from './src/styles/theme';
 import { defaultMode } from './src/context/ThemeContext';
 import Main from './src/screens/Main';
 import Header from './src/components/Header';
-import DateTimePickerTest from './src/components/DatePickerTest';
+import DateTimePicker from './src/components/DateTimePicker';
 
 const App = () => {
   const [themeState, setThemeState] = useState(defaultMode);
@@ -25,6 +25,7 @@ const App = () => {
   };
 
   const onChange = (event, selectedDate) => {
+    setIsPicked(Platform.OS === 'ios');
     const currentDate = selectedDate || date;
     setDate(currentDate);
   };
@@ -84,7 +85,7 @@ const App = () => {
           </Container>
         )}
         {isPicked && (
-          <DateTimePickerTest
+          <DateTimePicker
             onPress={() => {
               setIsPicked(!isPicked);
             }}
@@ -125,4 +126,5 @@ const Loading = styled.View`
 
 const LoadingText = styled.Text`
   font-size: 40px;
+  color: ${({ theme }) => theme.textColor};
 `;
